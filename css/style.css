@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header{
+    height: 70px
+}
+
+footer{
+    height: 30px
+}
+
+main {
+    width: 100%;
+    height: calc(100vh - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#grid-container {
+    height: 75vh;
+    width: 75vh;
+    background-color: gray;
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid black;
+}
+
+#grid-container > .cell {
+    height: calc(100% / 10);
+    width: calc(100% / 10);
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.15rem;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    color: white;
+}
+#grid-container > .cell.Easy {
+    height: calc(100% / 10);
+    width: calc(100% / 10);
+}
+#grid-container > .cell.Normal {
+    height: calc(100% / 9);
+    width: calc(100% / 9);
+}
+#grid-container > .cell.Hard {
+    height: calc(100% / 7);
+    width: calc(100% / 7);
+}
+
+#grid-container > .cell.clicked {
+    background-color: lightblue;
+}
+
+
+
