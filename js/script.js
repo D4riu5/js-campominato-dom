@@ -1,6 +1,7 @@
 // flags
 let gameOver = false;
 let cellsCreated = false;
+let playerScore = 0;
 
 // selectors
 const gridContainer = document.getElementById('grid-container');
@@ -77,12 +78,17 @@ function createNewCell(number) {
             }
             while (!this.classList.contains('clicked')){
                 this.classList.add('clicked');
-                score.innerHTML = "stai vincendo";
-                // show score and increment it
+                    if (this.classList.contains(('Bomb'))) {
+                        score.innerHTML = "Score : " + playerScore;
+                    }else{
+                        playerScore = playerScore + 1;
+                        score.innerHTML = "Score : " + playerScore;
+                    }
+                
             }
 
             if (this.classList.contains('Bomb')) {
-                score.innerHTML = "You lost!";
+                score.innerHTML = "You lost!" + `<span class ="text-danger"> Total score: ${playerScore} </span>` + `<span class ="small-txt"> Press reset on top right to try again! </span>`;
                 gameOver = true;
             }
         }
@@ -109,6 +115,8 @@ resetGame.addEventListener ('click',
         bombIndex = [];
         // reset game over value
         gameOver = false;
+        playerScore = 0;
         selectedDifficulty = document.getElementById('difficulty-selector').value = "placeholder";
+        score.innerHTML = "";
     }
 );
