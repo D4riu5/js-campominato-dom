@@ -21,8 +21,8 @@ main {
 }
 
 #grid-container {
-    height: 75vh;
-    width: 75vh;
+    height: 70vh;
+    width: 70vh;
     background-color: gray;
     display: flex;
     flex-wrap: wrap;

@@ -1,9 +1,15 @@
+// flags
+let gameOver = false;
+let cellsCreated = false;
+
+// selectors
 const gridContainer = document.getElementById('grid-container');
 const startGame = document.getElementById('start-game');
 const resetGame = document.getElementById('reset-game');
-let cellsCreated = false;
+const score = document.getElementById('score-text');
 let selectedDifficulty;
 
+// arrays
 let insertedCells = [];
 let bombIndex = [];
 
@@ -33,9 +39,7 @@ startGame.addEventListener ('click',
                 gridContainer.append(newCell);
             }
             
-
             // adding bombs to random cells
-            
             while (bombIndex.length < 16) {
                 let randomIndex = Math.floor(Math.random() * numberOfCells )
                 if(!bombIndex.includes(randomIndex)){
@@ -63,25 +67,29 @@ function createNewCell(number) {
     } else if (selectedDifficulty === "Hard") {
         cell.classList.add('Hard');
     }
-
-    cell.innerHTML = number + 1; // Add the progressive number
+    cell.innerHTML = number + 1; 
 
     cell.addEventListener('click',
         function () {
             console.log("cell " + this.innerText);
-
-            if(this.classList.contains('clicked')){
-                this.classList.remove('clicked');
+            if (gameOver == true) {
+                return;
             }
-            else{
+            while (!this.classList.contains('clicked')){
                 this.classList.add('clicked');
+                score.innerHTML = "stai vincendo";
+                // show score and increment it
+            }
+
+            if (this.classList.contains('Bomb')) {
+                score.innerHTML = "You lost!";
+                gameOver = true;
             }
         }
     );
     insertedCells.push(cell);
     return cell;
 }
-
 
 resetGame.addEventListener ('click',
     function () {
@@ -99,8 +107,8 @@ resetGame.addEventListener ('click',
         // reset for insertedCells  bombindex Arrays
         insertedCells = [];
         bombIndex = [];
-        
+        // reset game over value
+        gameOver = false;
         selectedDifficulty = document.getElementById('difficulty-selector').value = "placeholder";
-        
     }
 );
