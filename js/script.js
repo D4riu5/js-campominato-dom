@@ -1,18 +1,18 @@
+// arrays
+let insertedCells = [];
+let bombIndex = [];
+
 // flags
 let gameOver = false;
 let cellsCreated = false;
 let playerScore = 0;
-
+let remainingCells;
 // selectors
 const gridContainer = document.getElementById('grid-container');
 const startGame = document.getElementById('start-game');
 const resetGame = document.getElementById('reset-game');
 const score = document.getElementById('score-text');
 let selectedDifficulty;
-
-// arrays
-let insertedCells = [];
-let bombIndex = [];
 
 startGame.addEventListener ('click',
     function(){
@@ -50,6 +50,8 @@ startGame.addEventListener ('click',
             for (let i = 0; i < bombIndex.length; i++) {
                 insertedCells[bombIndex[i]].classList.add('Bomb');
             }
+            remainingCells = insertedCells.length - bombIndex.length;
+            console.log(remainingCells);
             cellsCreated = true;
         }
     }
@@ -78,17 +80,23 @@ function createNewCell(number) {
             }
             while (!this.classList.contains('clicked')){
                 this.classList.add('clicked');
-                    if (this.classList.contains(('Bomb'))) {
-                        score.innerHTML = "Score : " + playerScore;
-                    }else{
-                        playerScore = playerScore + 1;
-                        score.innerHTML = "Score : " + playerScore;
-                    }
-                
+                if (this.classList.contains(('Bomb'))) {
+                    score.innerHTML = "Score : " + playerScore;
+                }else{
+                    playerScore = playerScore + 1;
+                    remainingCells--;
+                    score.innerHTML = "Score : " + playerScore;
+                    console.log(remainingCells);
+                }
             }
 
             if (this.classList.contains('Bomb')) {
                 score.innerHTML = "You lost!" + `<span class ="text-danger"> Total score: ${playerScore} </span>` + `<span class ="small-txt"> Press reset on top right to try again! </span>`;
+                gameOver = true;
+            }
+
+            if (remainingCells === 0) {
+                score.innerHTML = "Congratulations, you won!" + `<span class ="text-success"> Total score: ${playerScore} </span>`;
                 gameOver = true;
             }
         }
@@ -116,7 +124,7 @@ resetGame.addEventListener ('click',
         // reset game over value
         gameOver = false;
         playerScore = 0;
-        selectedDifficulty = document.getElementById('difficulty-selector').value = "placeholder";
         score.innerHTML = "";
     }
 );
+
