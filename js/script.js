@@ -4,6 +4,9 @@ const resetGame = document.getElementById('reset-game');
 let cellsCreated = false;
 let selectedDifficulty;
 
+let insertedCells = [];
+let bombIndex = [];
+
 startGame.addEventListener ('click',
     function(){
         if (!cellsCreated) {
@@ -29,11 +32,25 @@ startGame.addEventListener ('click',
                 
                 gridContainer.append(newCell);
             }
+            
+
+            // adding bombs to random cells
+            
+            while (bombIndex.length < 16) {
+                let randomIndex = Math.floor(Math.random() * numberOfCells )
+                if(!bombIndex.includes(randomIndex)){
+                    bombIndex.push(randomIndex);
+                }
+            }
+            for (let i = 0; i < bombIndex.length; i++) {
+                insertedCells[bombIndex[i]].classList.add('Bomb');
+            }
             cellsCreated = true;
         }
     }
 );
-
+console.log(insertedCells);
+console.log(bombIndex);
 
 function createNewCell(number) {
     const cell = document.createElement('div');
@@ -61,6 +78,7 @@ function createNewCell(number) {
             }
         }
     );
+    insertedCells.push(cell);
     return cell;
 }
 
@@ -75,9 +93,14 @@ resetGame.addEventListener ('click',
         const cells = document.getElementsByClassName('cell');
 
         for (let i = 0; i < cells.length; i++) {
-            cells[i].classList.remove('easy', 'normal', 'hard');
+            cells[i].classList.remove('Easy', 'Normal', 'Hard', 'Bomb');
         }       
 
+        // reset for insertedCells  bombindex Arrays
+        insertedCells = [];
+        bombIndex = [];
+        
         selectedDifficulty = document.getElementById('difficulty-selector').value = "placeholder";
+        
     }
 );
