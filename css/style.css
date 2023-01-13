@@ -75,3 +75,7 @@ main {
 #reset-game{
     display: none;
 }
+
+header > *{
+    width: 350px;
+}

@@ -6,12 +6,14 @@ let bombIndex = [];
 let gameOver = false;
 let cellsCreated = false;
 let playerScore = 0;
+let playerHighScore = 0;
 let remainingCells;
 // selectors
 const gridContainer = document.getElementById('grid-container');
 const startGame = document.getElementById('start-game');
 const resetGame = document.getElementById('reset-game');
 const score = document.getElementById('score-text');
+const highScore = document.getElementById('high-score');
 let selectedDifficulty;
 
 startGame.addEventListener ('click',
@@ -107,6 +109,11 @@ function createNewCell(number) {
             if (remainingCells === 0) {
                 score.innerHTML = "Congratulations, you won!" + `<span class ="text-success"> Total score: ${playerScore} </span>`;
                 gameOver = true;
+            }
+
+            if (playerScore > playerHighScore) {
+                playerHighScore = playerScore;
+                highScore.innerText = "Highscore: " + playerHighScore;
             }
         }
     );
