@@ -53,6 +53,8 @@ startGame.addEventListener ('click',
             remainingCells = insertedCells.length - bombIndex.length;
             console.log(remainingCells);
             cellsCreated = true;
+            resetGame.style.display = "block";
+            startGame.style.display = "none";
         }
     }
 );
@@ -75,6 +77,7 @@ function createNewCell(number) {
     cell.addEventListener('click',
         function () {
             console.log("cell " + this.innerText);
+            
             if (gameOver == true) {
                 return;
             }
@@ -93,6 +96,12 @@ function createNewCell(number) {
             if (this.classList.contains('Bomb')) {
                 score.innerHTML = "You lost!" + `<span class ="text-danger"> Total score: ${playerScore} </span>` + `<span class ="small-txt"> Press reset on top right to try again! </span>`;
                 gameOver = true;
+                
+                // show every bomb cell
+                let bombs = document.querySelectorAll('.Bomb');
+                for (let i = 0; i < bombs.length; i++) {
+                    bombs[i].classList.add("clicked");
+                }
             }
 
             if (remainingCells === 0) {
@@ -125,6 +134,10 @@ resetGame.addEventListener ('click',
         gameOver = false;
         playerScore = 0;
         score.innerHTML = "";
+
+        // buttons
+        resetGame.style.display = "none";
+        startGame.style.display = "block";
     }
 );
 

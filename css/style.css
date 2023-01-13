@@ -71,3 +71,7 @@ main {
     display: block;
     font-size: 1rem;
 }
+
+#reset-game{
+    display: none;
+}
